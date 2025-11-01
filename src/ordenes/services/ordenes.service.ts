@@ -24,6 +24,15 @@ export class OrdenesService {
     return orden;
   }
 
+  async obtenerUltimaOrden() {
+    const orden = await this.ordenRepository.findOne({
+      order: {
+        id: 'DESC',
+      },
+    });
+    return orden;
+  }
+
   async crearOrden(body: CreateOrdenDto) {
     try {
       const nuevaOrden = await this.ordenRepository.save(body);

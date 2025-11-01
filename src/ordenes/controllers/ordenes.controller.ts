@@ -10,6 +10,11 @@ export class OrdenesController {
     return await this.ordenesService.obtenerOrdenes();
   }
 
+  @Get('ultima')
+  async obtenerUltimaOrden() {
+    return await this.ordenesService.obtenerUltimaOrden();
+  }
+
   @Get(':id')
   async obtenerOrdenPorId(@Param('id') id: string) {
     return await this.ordenesService.obtenerOrdenPorId(id);
