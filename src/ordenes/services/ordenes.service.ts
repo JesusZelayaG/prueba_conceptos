@@ -25,12 +25,13 @@ export class OrdenesService {
   }
 
   async obtenerUltimaOrden() {
-    const orden = await this.ordenRepository.findOne({
+    const ordenes = await this.ordenRepository.find({
       order: {
         id: 'DESC',
       },
+      take: 1,
     });
-    return orden;
+    return ordenes.length > 0 ? ordenes[0] : null;
   }
 
   async crearOrden(body: CreateOrdenDto) {
