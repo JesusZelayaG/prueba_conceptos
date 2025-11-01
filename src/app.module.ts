@@ -3,6 +3,7 @@ import { OrdenesModule } from './ordenes/ordenes.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { EnvConfig } from './env.models';
+import { PruebaOrdenModule } from './prueba-orden/prueba-orden.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { EnvConfig } from './env.models';
       inject: [ConfigService],
     }),
     OrdenesModule,
+    PruebaOrdenModule,
   ],
 })
 export class AppModule {}
