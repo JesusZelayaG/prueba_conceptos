@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { PruebaOrdenService } from './prueba-orden.service';
-import { CreatePruebaOrdenDto } from './dtos/prueba-orden.dto';
+import { CreatePruebaOrdenDto, CreateEnvioOrdenDto } from './dtos/prueba-orden.dto';
 
 @Controller('prueba-orden')
 export class PruebaOrdenController {
@@ -11,6 +11,11 @@ export class PruebaOrdenController {
     return await this.pruebaOrdenService.obtenerPruebaOrdenes();
   }
 
+  @Get('envios')
+  async obtenerEnvioOrdenes() {
+    return await this.pruebaOrdenService.obtenerEnvioOrdenes();
+  }
+
   @Get(':id')
   async obtenerPruebaOrdenPorId(@Param('id') id: string) {
     return await this.pruebaOrdenService.obtenerPruebaOrdenPorId(id);
@@ -19,6 +24,11 @@ export class PruebaOrdenController {
   @Post()
   async crearPruebaOrden(@Body() body: CreatePruebaOrdenDto) {
     return await this.pruebaOrdenService.crearPruebaOrden(body);
+  }
+
+  @Post('envio')
+  async crearEnvioOrden(@Body() body: CreateEnvioOrdenDto) {
+    return await this.pruebaOrdenService.crearEnvioOrden(body);
   }
 
   @Delete(':id')

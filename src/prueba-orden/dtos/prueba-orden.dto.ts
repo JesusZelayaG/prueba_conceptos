@@ -71,7 +71,7 @@ export class CreateProductoDto {
   condimentos?: CreateCondimentoDto[];
 }
 
-export class CreatePruebaOrdenDto {
+export class CreateOrdenDto {
   @IsOptional()
   @IsInt()
   numeroOrden?: number;
@@ -114,6 +114,35 @@ export class CreatePruebaOrdenDto {
   @IsString()
   tiempoTranscurrido?: string;
 }
+
+export class CreateInformacionOrdenDto {
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => CreateOrdenDto)
+  orden: CreateOrdenDto;
+
+  @IsOptional()
+  @IsBoolean()
+  esEnvioNuevo?: boolean;
+
+  @IsOptional()
+  @IsString()
+  idDeControl?: string;
+}
+
+export class CreateEnvioOrdenDto {
+  @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => CreateInformacionOrdenDto)
+  informacionDeOrdenes: CreateInformacionOrdenDto;
+
+  @IsOptional()
+  @IsString()
+  promedioOrdenes?: string;
+}
+
+// Mantengo los DTOs antiguos por compatibilidad
+export class CreatePruebaOrdenDto extends CreateOrdenDto {}
 
 export class UpdatePruebaOrdenDto {
   @IsOptional()

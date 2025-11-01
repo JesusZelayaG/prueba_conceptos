@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as mqtt from 'mqtt';
 import { OrdenEntity } from '../ordenes/entities/ordenes.entity';
 import { PruebaOrdenEntity } from '../prueba-orden/entities/prueba-orden.entity';
+import { EnvioOrdenEntity } from '../prueba-orden/entities/envio-orden.entity';
 
 @Injectable()
 export class MqttService {
@@ -167,6 +168,29 @@ export class MqttService {
       });
     } catch (error) {
       this.logger.error('No se pudo publicar la prueba orden:', error);
+    }
+  }
+
+  async publishEnvioOrden(envioOrden: EnvioOrdenEntity) {
+    try {
+      await this.waitForConnection();
+
+      const topic = 'envio-ordenes/nueva';
+      const message = JSON.stringify(envioOrden);
+
+      return new Promise<void>((resolve, reject) => {
+        this.client.publish(topic, message, { qos: 1 }, (error) => {
+          if (error) {
+            this.logger.error('Error al publicar envío orden MQTT:', error);
+            reject(error);
+          } else {
+            this.logger.log(`📤 Envío orden publicada en MQTT: ${envioOrden.id} -> Topic: ${topic}`);
+            resolve();
+          }
+        });
+      });
+    } catch (error) {
+      this.logger.error('No se pudo publicar el envío de orden:', error);
     }
   }
 

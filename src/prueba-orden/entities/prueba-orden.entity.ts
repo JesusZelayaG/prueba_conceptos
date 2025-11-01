@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductoEntity } from './producto.entity';
+import { InformacionOrdenEntity } from './informacion-orden.entity';
 
 @Entity('prueba_ordenes')
 export class PruebaOrdenEntity {
@@ -38,4 +39,7 @@ export class PruebaOrdenEntity {
 
   @Column({ type: 'varchar', name: 'tiempo_transcurrido', nullable: true })
   tiempoTranscurrido: string;
+
+  @OneToOne('InformacionOrdenEntity', 'orden')
+  informacionOrden: InformacionOrdenEntity;
 }
